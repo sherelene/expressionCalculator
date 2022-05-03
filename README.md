@@ -1,7 +1,7 @@
 # expressionCalculator
 Evaluate floating point expressions whose operands and values are floating-point numbers.
 
-This project is an extension of the java floating point calculator repo. The algorithm converts an infix expression into a suffix expression (Postfix expression).
+This project is an extension of the previous project-[java floating point calculator](https://github.com/sherelene/javaFloatingPointCalculator). The algorithm converts an infix expression into a suffix expression (Postfix expression).
 These then get calculated by using a stack. Examples of java floating point literals can be found here on [oracle's website](https://docs.oracle.com/javase/specs/jls/se17/html/jls-3.html#jls-DecimalFloatingPointLiteral).
 
 
