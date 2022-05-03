@@ -40,7 +40,7 @@ class ConvertNums:
         accept_nums = {"0": 0, "1": 1, "2": 2, "3": 3, "4": 4, "5": 5, "6": 6,
                        "7": 7, "8": 8, "9": 9}
         accept_chars = {"e": "e", "E": "E"}
-        accept_end = {"f": "f", "F": "F"}
+        accept_end = {"f": "f", "F": "F", "d": "d", "D": "D"}
         if c in accept_nums:
             dfa = 1
             return dfa, accept_nums[c]
@@ -74,7 +74,7 @@ class ConvertNums:
         accept_nums = {"0": 0, "1": 1, "2": 2, "3": 3, "4": 4, "5": 5, "6": 6,
                        "7": 7, "8": 8, "9": 9}
         accept_chars = {"e": "E"}
-        accept_end = {"f": "f", "F": "F"}
+        accept_end = {"f": "f", "F": "F", "d": "d", "D": "D"}
         if c in accept_nums:
             dfa = 2
             return dfa, accept_nums[c]
@@ -98,7 +98,7 @@ class ConvertNums:
         This function next state if previous state was a digit
         Accepts input 0-9 and returns to itself
         Accepts e, E next state 3
-        Accepts f, f next state 5 -> accept/end state
+        Accepts f, F, d, D next state 5 -> accept/end state
 
         :param c: current char from input string
         :return: next state, int of string if string is 0-9 else current char
@@ -107,7 +107,7 @@ class ConvertNums:
         accept_nums = {"0": 0, "1": 1, "2": 2, "3": 3, "4": 4, "5": 5, "6": 6,
                        "7": 7, "8": 8, "9": 9}
         accept_chars = {"e": "e", "E": "E"}
-        accept_end = {"f": "f", "F": "F"}
+        accept_end = {"f": "f", "F": "F", "d": "d", "D": "D"}
         if c in accept_nums:
             dfa = 2
             return dfa, accept_nums[c]
@@ -153,14 +153,14 @@ class ConvertNums:
         """
         This function is for the next state after the start state if start state was a .
         Accepts input 0-9 next state 2
-        Accepts f, f next state 5 -> end state
+        Accepts f, F, d, D next state 5 -> end state
         :param c: current char from input string
         :return: next state, int of string if string is 0-9 else current char
 
         """
         accept_nums = {"0": 0, "1": 1, "2": 2, "3": 3, "4": 4, "5": 5, "6": 6,
                        "7": 7, "8": 8, "9": 9}
-        accept_end = {"f": "f", "F": "F"}
+        accept_end = {"f": "f", "F": "F", "d": "d", "D": "D"}
         if c in accept_nums:
             dfa = 2
             return dfa, accept_nums[c]
@@ -178,9 +178,9 @@ class ConvertNums:
         Accepts only f, F
         accept/end state
         :param c: current char from input string
-        :return: current state, f or F char
+        :return: current state, f, F, d, D char
         """
-        accept_end = {"f": "f", "F": "F"}
+        accept_end = {"f": "f", "F": "F", "d": "d", "D": "D"}
         if c in accept_end:
             dfa = 5
             return dfa, accept_end[c]
@@ -188,14 +188,20 @@ class ConvertNums:
             dfa = -1
         return dfa, -1
 
-    # This function is only called if there is an exponent and after state 3
-    # Accepts input 0-9 returns to itself
-    # Accepts f, f next state 5 -> end state
-    def state6(self, c):
+
+    @staticmethod
+    def state6(c):
+        """
+        This function is only called if there is an exponent and after state 3
+        Accepts input 0-9 returns to itself
+        Accepts f, F, d, D next state 5 -> end state
+        :param c: current char
+        :return: next state, int of string if string is 0-9 else current char
+        """
         underscores = {"_": "_"}
         accept_nums = {"0": 0, "1": 1, "2": 2, "3": 3, "4": 4, "5": 5, "6": 6,
                        "7": 7, "8": 8, "9": 9}
-        accept_end = {"f": "f", "F": "F"}
+        accept_end = {"f": "f", "F": "F", "d": "d", "D": "D"}
         if c in accept_nums:
             dfa = 6
             return dfa, accept_nums[c]
@@ -209,8 +215,15 @@ class ConvertNums:
             dfa = -1
         return dfa, -1
 
-    # state only for underscores before decimals
-    def state7(self, c):
+
+    @staticmethod
+    def state7(c):
+        """
+        state only for underscores before decimals
+        :param c: current char from input string
+        :return: next state, int of string if string is 0-9 else current char
+
+        """
         underscores = {"_": "_"}
         accept_nums = {"0": 0, "1": 1, "2": 2, "3": 3, "4": 4, "5": 5, "6": 6,
                        "7": 7, "8": 8, "9": 9}
@@ -224,8 +237,15 @@ class ConvertNums:
             dfa = -1
             return dfa, -1
 
-    # state for underscores after exponent part
-    def state8(self, c):
+
+    @staticmethod
+    def state8(c):
+        """
+        state for underscores after exponent part
+        :param c: current char from input string
+        :return: next state, int of string if string is 0-9 else current char
+
+        """
         underscores = {"_": "_"}
         accept_nums = {"0": 0, "1": 1, "2": 2, "3": 3, "4": 4, "5": 5, "6": 6,
                        "7": 7, "8": 8, "9": 9}
@@ -239,8 +259,15 @@ class ConvertNums:
             dfa = -1
             return dfa, -1
 
-    # state only for underscores after decimals
-    def state9(self, c):
+
+    @staticmethod
+    def state9(c):
+        """
+        state only for underscores after decimals
+        :param c: current char from input string
+        :return: next state, int of string if string is 0-9 else current char
+
+        """
         underscores = {"_": "_"}
         accept_nums = {"0": 0, "1": 1, "2": 2, "3": 3, "4": 4, "5": 5, "6": 6,
                        "7": 7, "8": 8, "9": 9}
@@ -254,7 +281,15 @@ class ConvertNums:
             dfa = -1
             return dfa, -1
 
+
     def isAccepted(self, String):
+        """
+         Function for taking one character to the next character by checking if they pass the approved states
+        :param String: character
+        :return: converted number of input string e.g 1e1 -> 10
+
+        """
+
         # store length of Stringing
         length = len(String)
         # initialize variables and array for converting to float
@@ -325,7 +360,7 @@ class ConvertNums:
             elif "-" == num:
                 minus_found = True
             # if "f" or "F" is the current character, it is ignored
-            elif "f" == num or "F" == num:
+            elif "f" == num or "F" == num or 'D' == num or 'd' == num:
                 continue
             else:  # numbers are added to character array to be converted to a float
                 characters.append(num)
@@ -339,9 +374,23 @@ class ConvertNums:
             number = self.get_num(characters, e_index, e_found, dot_index, dot_found, minus_found)
             return number
         else:
-            return False
+            return 0
 
-    def get_num(self, characters, e_index, e_found, dot_index, dot_found, minus_found):
+
+    @staticmethod
+    def get_num(characters, e_index, e_found, dot_index, dot_found, minus_found):
+        """
+        Function that does the actual converting of characters to a float
+        :param characters: the validated java floating point number input string
+        :param e_index: index where e or E can be found
+        :param e_found: bool if e or E exist
+        :param dot_index: index where "." can be found
+        :param dot_found: bool if dot exist
+        :param minus_found: bool if there is a negative sign found after e or E
+        :return: string number to float number e.g 1e1 -> 10
+
+        """
+
         # initialize variables for help converting to float
         length = len(characters)
         sum = 0
@@ -483,10 +532,6 @@ class Stack(object):
 
 
 class Calculator(object):
-    """
-  A simple calculator, just for fun
-  """
-
     def __init__(self):
         self.__exp = ''
 
@@ -496,13 +541,6 @@ class Calculator(object):
     1. We only accept the `()` to specify the priority of a sub-expression. Notes: `[ {` and `] }` will be
     replaced by `(` and `)` respectively.
     2. Valid characters should be `+`, `-`, `*`, `/`, `(`, `)` and numbers(int, float)
-    - Invalid expression examples, but we can only handle the 4th case. The implementation will
-    be much more sophisticated if we want to handle all the possible cases.:
-      1. `a+b-+c`
-      2. `a+b+-`
-      3. `a+(b+c`
-      4. `a+(+b-)`
-      5. etc
     :return: True or False
     """
         if not isinstance(self.__exp, str):
@@ -517,15 +555,13 @@ class Calculator(object):
         for x in self.__exp:
             # We should ignore the space characters
             current = x
-            print('current', current)
             if x == ' ':
                 previous = '-1'
                 continue
             else:
                 previous = x
-            print('previous before change', previous)
 
-            if x == 'f' or x == 'F' and self.__is_digit(previous):
+            if x == 'f' or x == 'F' or x == 'd' or x == 'D' and self.__is_digit(previous):
                 continue
 
             if self.__is_digit(x) and previous == '-1':
@@ -542,7 +578,6 @@ class Calculator(object):
                 print('Error: {}: invalid character: {}'.format(self.__exp, x))
                 return False
             previous = x
-            print("previous", x)
 
         if s.top():
             print('Error: {}: missing ")", please check your expression'.format(self.__exp))
@@ -564,7 +599,6 @@ class Calculator(object):
         stk = Stack()
         for x in self.__exp:
             current = x
-            #print("current", current)
             if self.__is_digit(x) or x == '.' or x == 'e' or x == 'E' or x == '_' or previous == 'e' or previous == 'E':
                 converted_exp += x
             elif self.__is_operators(x):
@@ -599,7 +633,6 @@ class Calculator(object):
                         converted_exp += stk.pop() + ' '
                     stk.pop()
             previous = current
-            #print("previous", previous)
         # pop all the operators
         while stk.top():
             converted_exp += ' ' + stk.pop() + ' '
@@ -630,7 +663,6 @@ class Calculator(object):
         stk = Stack()
         exp_split = exp.strip().split()
         for x in exp_split:
-            print(x)
             if self.__is_operators(x):
                 # pop two top numbers in the stack
                 r = self.__get_result(stk.pop(), stk.pop(), x)
@@ -643,13 +675,11 @@ class Calculator(object):
                 stk.push(
                     self.changeNumber(x))  # <----------------___----------- here change number originally stk.push(
                 # float(x))
-                print("x", self.changeNumber(x))
         return stk.pop()
 
     def changeNumber(self, expr):
         b = ConvertNums()
         expression = b.isAccepted(expr)
-        print("exp", expression)
         return expression
 
     def __calc(self):
@@ -672,6 +702,7 @@ class Calculator(object):
     """
         self.__exp = expression.strip()
         return self.__calc()
+
 
     """
   Utilities
@@ -698,9 +729,27 @@ class Calculator(object):
             return 1
 
 
-c = Calculator()
-print('result: {:f}'.format(c.get_result('1.356f + 8f')))
+
+def main(input_string):
+    c = Calculator()
+    result = c.get_result(input_string)
+    print('result: ', result)
 
 
+if __name__ == '__main__':
+    again = True
 
-#((5.0e-1+2.50)*(.01)/10.)
+    # infinite loop asking user to enter a number
+    # exits when entered q or quit
+    print("enter 'q' or 'quit' to exit")
+    while again:
+        user_input = input('Please enter your floating point literal: ')
+        if user_input == 'q' or user_input == "quit":
+            again = False
+        else:
+            main(user_input)
+
+
+# test (13.0*(1-1.0)+20.0)*5.0+100.0+((21e1f))-1e-1d
+# test ((.5+2.50)*(.0__1)/10.f)
+# test 15_____31.21___1 * 4 + (3f - 13_1d)
